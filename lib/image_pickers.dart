@@ -34,7 +34,7 @@ class ImagePickers {
   ///
   static Future<Media> openCamera({
     CameraMimeType cameraMimeType: CameraMimeType.photo,
-    CropConfig cropConfig,
+    CropConfig? cropConfig,
     int compressSize: 500,
   }) async {
     String mimeType = "photo";
@@ -104,11 +104,11 @@ class ImagePickers {
 
   static Future<List<Media>> pickerPaths({
     GalleryMode galleryMode: GalleryMode.image,
-    UIConfig uiConfig,
+    UIConfig? uiConfig,
     int selectCount: 1,
     bool showCamera: false,
     bool showGif: true,
-    CropConfig cropConfig,
+    CropConfig? cropConfig,
     int compressSize: 500,
   }) async {
     String gMode = "image";
@@ -150,7 +150,7 @@ class ImagePickers {
     };
     final List<dynamic> paths =
         await _channel.invokeMethod('getPickerPaths', params);
-    List<Media> medias = List();
+    List<Media> medias = List.empty();
     paths.forEach((data) {
       Media media = Media();
       media.thumbPath = data["thumbPath"];
@@ -176,7 +176,7 @@ class ImagePickers {
   ///
   ///imagePaths 图片本地路径集合或者网络url集合 Image local path collection or network url collection
 
-  static previewImages(List<String> imagePaths, int initIndex) {
+  static previewImages(List<String?> imagePaths, int initIndex) {
     final Map<String, dynamic> params = <String, dynamic>{
       'paths': imagePaths,
       'initIndex': initIndex,
@@ -190,9 +190,9 @@ class ImagePickers {
   ///
   ///Media中真正有效使用的数据是 Media.path The really effectively used data in Media is Media.path
   ///
-  static previewImagesByMedia(List<Media> imageMedias, int initIndex) {
+  static previewImagesByMedia(List<Media>? imageMedias, int initIndex) {
     if (imageMedias != null && imageMedias.length > 0) {
-      List<String> paths =
+      List<String?> paths =
           imageMedias.map((Media media) => media.path).toList();
       previewImages(paths, initIndex);
     }
@@ -278,12 +278,12 @@ class CropConfig {
 class Media {
   ///视频缩略图图片路径
   ///Video thumbnail image path
-  String thumbPath;
+  String? thumbPath;
 
   ///视频路径或图片路径
   ///Video path or image path
-  String path;
-  GalleryMode galleryMode;
+  String? path;
+  GalleryMode? galleryMode;
 }
 
 /// Created by liSen on 2019/11/15 10:51.
